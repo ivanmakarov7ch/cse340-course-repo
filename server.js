@@ -4,6 +4,7 @@ import path from 'path';
 // Database import code below
 import { testConnection } from './src/models/db.js';
 import { getAllOrganizations } from './src/models/organizations.js';
+import { getAllProjects } from './src/models/projects.js';
 
 // Define the application environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
@@ -45,18 +46,21 @@ app.get('/organizations', async (req, res) => {
 });
 
 app.get('/projects', async (req, res) => {
+    const projects = await getAllProjects();
     const title = 'Service Projects';
-    res.render('projects', { title });
+
+    console.log(projects);
+
+    res.render('projects', { title, projects });
 });
+
 
 app.get('/categories', async (req, res) => {
     const title = 'Categories';
     res.render('categories', { title });
 });
 
-// app.get('/', (req, res) => {
-//   res.send('Hello from MegaExpress!');
-// });
+
 
 app.listen(PORT, async () => {
   try {
