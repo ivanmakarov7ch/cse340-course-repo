@@ -43,3 +43,49 @@ VALUES (1, 'Park Cleanup', 'Join us to clean up local parks and make them beauti
 	   (2, 'Toy Repair Workshop', 'Fix and sanitize donated toys for holiday distributions.', 'Kids First Warehouse', '2026-06-11'),
 	   (3, 'School Supply Packing', 'Fill backpacks with notebooks and pens for students.', 'Youth First Center', '2026-06-13')
 ;
+
+-- Week 2 Part 2
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE project_categories (
+    project_id INTEGER NOT NULL,
+    category_id INTEGER NOT NULL,
+
+    PRIMARY KEY (project_id, category_id),
+
+    FOREIGN KEY (project_id)
+        REFERENCES projects(project_id),
+
+    FOREIGN KEY (category_id)
+        REFERENCES categories(category_id)
+);
+
+INSERT INTO categories (name)
+VALUES
+    ('Environmental'),
+    ('Educational'),
+	('Community Service'),
+    ('Health and Wellness'),
+    ('Animal Welfare');
+
+INSERT INTO project_categories (project_id, category_id)
+VALUES
+    (1, 1),
+    (1, 2),
+    (2, 2),
+    (3, 3),
+    (4, 2),
+    (5, 1),
+    (6, 5),
+    (7, 1),
+    (8, 4),
+    (9, 3),
+    (10, 2),
+    (11, 1),
+    (12, 2),
+    (13, 1),
+    (14, 2),
+    (15, 3);
