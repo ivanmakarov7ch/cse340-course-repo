@@ -2,7 +2,6 @@
 
 <main>
     <h1><%= title %></h1>
-    <!-- Put your page-specific content here -->
      <h2>Upcoming Service Projects</h2>
         <ul>
             <% projects.forEach(project => { %>
@@ -17,17 +16,6 @@
                 </li>
             <% }) %>
         </ul>
-        <!-- <ul>
-            <% projects.forEach(project => { %>
-                <li>
-                    <strong><%= project.title %></strong> - 
-                    <span><%= project.location %></span> 
-                    (<%= new Date(project.project_date).toLocaleDateString() %>)
-                    <p><%= project.description %></p>
-                </li>
-            <% }); %>
-        </ul> -->
 </main>
 
 <%- include('partials/footer') %>
-////////////////////////////////////////////////////
