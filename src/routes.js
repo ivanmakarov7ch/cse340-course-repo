@@ -5,7 +5,8 @@ import { showOrganizationsPage } from './controllers/organizations.js';
 
 import {showProjectsPage, showProjectDetailsPage} from './controllers/projects.js';
 
-import { showCategoriesPage } from './controllers/categories.js';
+import {showCategoriesPage, showCategoryDetailsPage} from './controllers/categories.js';
+
 import { testErrorPage } from './controllers/errors.js';
 import { showOrganizationDetailsPage } from './controllers/organizations.js';
 
@@ -26,6 +27,7 @@ router.get('/project/:id', showProjectDetailsPage);
 
 // Categories
 router.get('/categories', showCategoriesPage);
+router.get('/category/:id', showCategoryDetailsPage);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);
