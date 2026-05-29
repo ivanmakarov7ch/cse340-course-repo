@@ -15,13 +15,16 @@
             <li><a href="/categories">Categories</a></li>
         </ul>
     </nav>
-    <% const messages = flash(); %>
+<% const messages = flash(); %>
+
+<div class="flash-container">
     <% Object.keys(messages).forEach(type => { %>
         <% if (messages[type].length > 0) { %>
-            
-                <% messages[type].forEach(msg => { %>
+            <% messages[type].forEach(msg => { %>
+                <div class="alert <%= type %>">
                     <%= msg %>
-                <% }); %>
-            
+                </div>
+            <% }) %>
         <% } %>
-    <% }); %>
+    <% }) %>
+</div>
