@@ -1,44 +1,50 @@
 <%- include('partials/header') %>
 
 <main>
-    <h1><%= title %></h1>
-    <h2>Upcoming Service Projects</h2>
-    <ul>
-        <% projects.forEach(project => { %>
-            <li>
-                <!-- Project link -->
-                <strong>
-                    <a href="/project/<%= project.project_id %>">
-                        <%= project.title %>
-                    </a>
-                </strong>
-                <br>
-                <!-- Organization link -->
+<div class="project-grid">
+    <% projects.forEach(project => { %>
+
+        <div class="project-card">
+
+            <h2 class="project-title">
+                <a href="/project/<%= project.project_id %>">
+                    <%= project.title %>
+                </a>
+            </h2>
+
+            <p class="project-org">
                 Organization:
                 <a href="/organization/<%= project.organization_id %>">
                     <%= project.organization_name %>
                 </a>
-                <br>
-                <!-- Date -->
-                Date:
-                <%= new Date(project.date).toLocaleDateString() %>
-                <br>
-                <!-- Description -->
+            </p>
+
+            <p class="project-date">
+                Date: <%= new Date(project.date).toLocaleDateString() %>
+            </p>
+
+            <p class="project-desc">
                 <%= project.description %>
-                <br><br>
+            </p>
+
+            <div class="project-actions">
+
                 <% if (user && user.role_name === 'admin') { %>
-                <a href="/assign-categories/<%= project.project_id %>">Edit Categories</a>
+                    <a class="btn-small" href="/assign-categories/<%= project.project_id %>">
+                        Edit Categories
+                    </a>
+
+                    <a class="btn-small" href="/edit-project/<%= project.project_id %>">
+                        Edit Project
+                    </a>
                 <% } %>
-                
-                <% if (user && user.role_name === 'admin') { %>
-                <a href="/edit-project/<%= project.project_id %>">Edit Project</a>
-                <% } %>
-            </li>
-        <% }) %>
-    </ul>
-    <% if (user && user.role_name === 'admin') { %>
-        <p><a href="/new-project">Add a New Service Project</a></p>
-    <% } %>
+
+            </div>
+
+        </div>
+
+    <% }) %>
+</div>
 </main>
 
 <%- include('partials/footer') %>
