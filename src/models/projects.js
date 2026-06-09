@@ -143,11 +143,79 @@ const updateProject = async (
     return result.rows[0].project_id;
 };
 
+// Additional Feature
+// Add Volunteer
+const addVolunteer = async (userId, projectId) => {
+    const query = `
+        INSERT INTO project_volunteers (user_id, project_id)
+        VALUES ($1, $2)
+        ON CONFLICT (user_id, project_id)
+        DO NOTHING;
+    `;
+
+    await db.query(query, [userId, projectId]);
+};
+
+// Remove Volunteer
+const removeVolunteer = async (userId, projectId) => {
+    const query = `
+        DELETE FROM project_volunteers
+        WHERE user_id = $1
+        AND project_id = $2;
+    `;
+
+    await db.query(query, [userId, projectId]);
+};
+
+// Check If User Is Already Volunteering
+const isVolunteer = async (userId, projectId) => {
+    const query = `
+        SELECT *
+        FROM project_volunteers
+        WHERE user_id = $1
+        AND project_id = $2;
+    `;
+
+    const result = await db.query(query, [userId, projectId]);
+
+    return result.rows.length > 0;
+};
+
+// Get All Projects User Volunteered For
+const getVolunteerProjects = async (userId) => {
+    const query = `
+        SELECT
+            projects.project_id,
+            projects.title,
+            projects.description,
+            projects.location,
+            projects.project_date AS date,
+            organization.name AS organization_name
+        FROM project_volunteers
+        JOIN projects
+            ON project_volunteers.project_id = projects.project_id
+        JOIN organization
+            ON projects.organization_id = organization.organization_id
+        WHERE project_volunteers.user_id = $1
+        ORDER BY projects.project_date;
+    `;
+
+    const result = await db.query(query, [userId]);
+
+    return result.rows;
+};
+
+
+
 export {
     getAllProjects,
     getUpcomingProjects,
     getProjectsByOrganizationId,
     getProjectDetails,
     createProject,
-    updateProject
+    updateProject,
+    addVolunteer,
+    removeVolunteer,
+    isVolunteer,
+    getVolunteerProjects
 };

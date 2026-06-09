@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { createUser, authenticateUser } from '../models/users.js';
 import { getAllUsers } from '../models/users.js';
+import { getVolunteerProjects } from '../models/projects.js';
 
 const showUserRegistrationForm = (req, res) => {
     res.render('register', { title: 'Register' });
@@ -74,24 +75,15 @@ const requireLogin = (req, res, next) => {
     next();
 };
 
-// module.exports = {
-//     // ... other exports
-//     requireLogin
-// };
+const showDashboard = async (req, res) => {
+    const volunteerProjects = await getVolunteerProjects(
+        req.session.user.user_id
+    );
 
-// const showDashboard = (req, res) => {
-//     const user = req.session.user;
-//     res.render('dashboard', { 
-//         title: 'Dashboard',
-//         name: user.name,
-//         email: user.email
-//     });
-// };
-
-const showDashboard = (req, res) => {
     res.render('dashboard', {
         title: 'Dashboard',
-        user: req.session.user
+        user: req.session.user,
+        volunteerProjects
     });
 };
 
@@ -132,5 +124,12 @@ const showUsersPage = async (req, res) => {
 
 
 
-export { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, requireLogin, showDashboard, requireRole };
-export { showUsersPage };
+export { showUserRegistrationForm,
+        processUserRegistrationForm,
+        showLoginForm,
+        processLoginForm,
+        processLogout,
+        requireLogin,
+        showDashboard,
+        requireRole,
+        showUsersPage };

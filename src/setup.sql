@@ -125,3 +125,20 @@ DELETE FROM users WHERE email = 'test@example.com';
 
 UPDATE users SET role_id = (SELECT role_id FROM roles WHERE role_name = 'admin') WHERE email = 'admin@example.com';
 SELECT users.user_id, users.email, roles.role_name FROM users JOIN roles ON users.role_id = roles.role_id;
+
+
+-- Additional Feature
+CREATE TABLE project_volunteers (
+    user_id INTEGER NOT NULL,
+    project_id INTEGER NOT NULL,
+
+    PRIMARY KEY (user_id, project_id),
+
+    FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (project_id)
+        REFERENCES projects(project_id)
+        ON DELETE CASCADE
+);

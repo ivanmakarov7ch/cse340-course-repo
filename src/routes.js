@@ -3,7 +3,12 @@ import express from 'express';
 import { showHomePage } from './controllers/index.js';
 import { showOrganizationsPage } from './controllers/organizations.js';
 
-import {showProjectsPage, showProjectDetailsPage} from './controllers/projects.js';
+import {
+    showProjectsPage,
+    showProjectDetailsPage,
+    volunteerForProject,
+    removeVolunteerFromProject
+} from './controllers/projects.js';
 
 import {showCategoriesPage, showCategoryDetailsPage} from './controllers/categories.js';
 
@@ -19,12 +24,10 @@ import { processEditOrganizationForm } from './controllers/organizations.js';
 import { showNewProjectForm } from './controllers/projects.js';
 import { processNewProjectForm } from './controllers/projects.js';
 import { projectValidation } from './controllers/projects.js';
+import { showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
 
 import { showAssignCategoriesForm } from './controllers/categories.js';
 import { processAssignCategoriesForm } from './controllers/categories.js';
- 
-import { showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
-
 import { 
     showNewCategoryForm,
     processNewCategoryForm,
@@ -57,6 +60,9 @@ router.get('/projects', showProjectsPage);
 
 // NEW: Project details page (IMPORTANT)
 router.get('/project/:id', showProjectDetailsPage);
+//Additional Feature
+router.post('/project/:id/volunteer', requireLogin, volunteerForProject);
+router.post('/project/:id/unvolunteer', requireLogin, removeVolunteerFromProject);
 
 // Categories
 router.get('/categories', showCategoriesPage);
